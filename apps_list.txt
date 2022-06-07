@@ -1,2 +1,10 @@
 pages > index page
-fundraiser > 
+fundraisers_ngos > fundraiser_ngo models
+fundraisers_indivs >
+              fundraiser_education models
+              fundraiser_healthcare models
+              fundraiser_others models
+ngos > ngos models
+campaigns > campaigns models
+accounts > profile models
+faqs > faqs models
