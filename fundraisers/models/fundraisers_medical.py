@@ -1,13 +1,13 @@
 from django.db import models
-
+import datetime
 class Fundraisers_medical(models.Model):
     patient_name=models.CharField(max_length=50)
-    # benificiary=models.CharField(max_length=50)
+    benificiary=models.CharField(max_length=50)
     relation=models.CharField(max_length=50)
     phone=models.CharField(max_length=15)
     email=models.EmailField()
     target_amount=models.IntegerField()
-    # end_date=models.DateField()
+    end_date=models.DateField()
     patient_age=models.IntegerField()
     patient_photo=models.ImageField(upload_to='uploads/patient_photo/')
     medical_ailment=models.CharField(max_length=50)
