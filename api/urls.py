@@ -1,16 +1,10 @@
 from django.urls import path
-from .views import *
+
 from .views.routes import getRoutes
-# from .views.carousel_view import getCarousel
-# from .views.findraiser_data_view import getFundraiser_data
-# from .views.events_view import getEvent
-# from .views.what_people_say_view import getWhat_people_say
-# from .views.our_success_story_view import getOur_success_story
-# from .views.our_volunteers_view import getOur_volunteer
-# from .views.our_partners_view import getOur_partner
+
 from .views.homepage import *
-#from api.views import Fundraiser_data_view
-from . import views
+from .views.medical_fundraiser_views import getMedicalFundraiser, getOneMedicalFundraiser, CreateMedicalFundraiser, UpdateMedicalFundraiser
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -21,8 +15,15 @@ from rest_framework_simplejwt.views import (
 
 urlpatterns=[
     path('',getRoutes.as_view()),
+
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # GENERATE TOKEN
     path('refresh_token/', TokenRefreshView.as_view(), name='token_refresh'),  # GENERATE REFRESH TOKE
+
+    path('medical_fundraiser/', getMedicalFundraiser.as_view()),
+    path('medical_fundraiser/<str:email>', getOneMedicalFundraiser.as_view()),
+    path('medical_fundraiser/create/', CreateMedicalFundraiser.as_view(), name='create_medical_fundraiser'),
+    path('medical_fundraiser/update/', UpdateMedicalFundraiser.as_view(), name='update_medical_fundraiser'),
+
     path('carousel/',getCarousel.as_view()),                                  #CAROUSEL API
     path('fundraiser_alldata/',  getFundraiser_data.as_view(), name ='fundraiser_data'),   # FUNDRAISER ALL DATA API
     path('event_data/',getEvent.as_view()),                                       #ALL CURRENT AND INCOMING EVENT DATA  API

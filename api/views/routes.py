@@ -14,6 +14,10 @@ class getRoutes(APIView):
         {'GET':'api/our_volunteers'},        # OUR VOLUNTEERS 
         {'GET':'api/our_partners'},        # OUR PARTNERS
 
+        {'GET': '/api/medical_fundraiser'},
+        {'GET': '/api/medical_fundraiser/email'},
+        {'POST': '/api/medical_fundraiser/create'},
+        {'PATCH': '/api/medical_fundraiser/update'},
 
         {'POST': 'api/token'},        #TOKEN
         {'POST': 'api/refresh_token'}, #  REFRESH TOEKN

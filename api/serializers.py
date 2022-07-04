@@ -1,8 +1,28 @@
-
 from rest_framework import serializers
-
 from home_app.models import *
+from fundraisers.models.fundraisers_medical import Fundraisers_medical
 
+# SERIALIZERS FOR MEDICAL API STARTS
+class FundraiserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fundraisers_medical
+        fields = '__all__'
+
+
+class CreateMedicalFundraiserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fundraisers_medical
+        fields = '__all__'
+
+
+class UpdateMedicalFundraiserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fundraisers_medical
+        fields = '__all__'
+
+# SERIALIZERS FOR MEDICAL API ENDS
+
+# SERIALIZERS FOR HOME PAGE STARTS
 
 #serialize the model  CAROUSEL
 class carouselSerializer(serializers.ModelSerializer):
@@ -52,3 +72,6 @@ class our_partnersSerializer(serializers.ModelSerializer):
     class Meta:
         model=our_partners
         fields= '__all__'
+
+
+# SERIALIZERS FOR HOME PAGE ENDS
