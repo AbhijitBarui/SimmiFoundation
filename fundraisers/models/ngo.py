@@ -18,7 +18,7 @@ class ngo(models.Model):
     photo4=models.ImageField(upload_to='uploads/ngo_proofs/ngo_photos',null=True,blank=True)
     photo5=models.ImageField(upload_to='uploads/ngo_proofs/ngo_photos',null=True,blank=True)
     address=models.CharField(max_length=200)
-    contact=models.IntegerField(max_length=20)
+    contact=models.IntegerField()
     email=models.EmailField()
     media_links=models.URLField(blank=True)
     ##tax exception
