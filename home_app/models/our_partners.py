@@ -1,6 +1,6 @@
 from django.db import models
 #OUR  PARTNERS MODEL 
-class our_partners(models.Model):
+class Our_partners(models.Model):
     #FUNCTION FOR STORE IMAGE SEPERATELY WITH PARTNER  IMAGE
     def nameFile(instance,filename):             
      return '/'.join(['OUR_PARTNER_IMAGE',str(instance.partner_name),filename])

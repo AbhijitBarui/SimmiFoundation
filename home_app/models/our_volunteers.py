@@ -1,6 +1,6 @@
 from django.db import models
 #OUR  VOLUNTEERS MODEL 
-class our_volunteers(models.Model):
+class Our_volunteers(models.Model):
     def nameFile(instance,filename):             
      return '/'.join(['OUR_VOLUNTEERS_IMAGE',str(instance.volunteer_name),filename])
     volunteer_img=models.ImageField(upload_to=nameFile)
