@@ -1,6 +1,6 @@
 from django.db import models
 #TRENDING FUNDRAISER MODEL
-class trending_fundraisers(models.Model):
+class Trending_fundraisers(models.Model):
     def nameFile(instance,filename):             
      return '/'.join(['TRENDING_FUNDRAISER_IMAGE',str(instance.fundraiser_name),filename])
     fundraiser_image=models.ImageField(upload_to=nameFile)

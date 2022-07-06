@@ -3,8 +3,15 @@ from django.contrib import admin
 # Register your models here.
 
 from django.contrib import admin
+
+# from home_app.models.current_incoming_event import Current_incoming_event
+# from home_app.models.our_partners import Our_partners, Our_partners
+# from home_app.models.our_success_story import OUR_success_story, Our_success_story
+# from home_app.models.our_volunteers import OUR_volunteers, Our_volunteers
+# from home_app.models.trending_fundraiser import TRENDING_fundraisers, Trending_fundraisers
+# from home_app.models.what_people_say import WHAT_people_say
 from .models import *
-from home_app.models import trending_fundraisers
+from home_app.models import *
 
 #TRENDING FUNDRAISER ADMIN MODIFICATION
 class trending_fundAdmin(admin.ModelAdmin):
@@ -16,28 +23,28 @@ class event(admin.ModelAdmin):
     list_display=['event_img','event_name','about_event']
 
 #WHAT PEOPLE SAY ADMIN MODIFICATION
-class What_people_say(admin.ModelAdmin):
+class people_say(admin.ModelAdmin):
     list_display =['person_name','person_image','person_review']
 
 # OUR SUCCESS STORY ADMIN MODIFICATION
-class Our_success_story(admin.ModelAdmin):
+class success_story(admin.ModelAdmin):
     list_display =['success_img','success_heading','about_success']
 
 # OUR VOLUNTEERS ADMIN MODIFICATION
-class Our_volunteers(admin.ModelAdmin):
+class volunteers(admin.ModelAdmin):
     list_display =['volunteer_img','volunteer_name','about_volunteer']
 
 
 # OUR PARTNERS ADMIN MODIFICATION
-class Our_partners(admin.ModelAdmin):
+class partners(admin.ModelAdmin):
     list_display =['partner_logo','partner_name']
 
 # Register your models here.
 admin.site.register(carousel)   # CAROSOUL REGISTER 
-admin.site.register(trending_fundraisers,trending_fundAdmin)     # TRENDING FUNDRAISER REGISTER
-admin.site.register(current_incoming_event,event)                 # CURRENT AND INCOMING EVENT REGISTER
-admin.site.register(what_people_say,What_people_say)               # WHAT PEOPLE SAY  REGISTER
-admin.site.register(our_success_story,Our_success_story)            # OUR SUCCESS STORY REGISTER
-admin.site.register(our_volunteers,Our_volunteers)                  # OUR VOLUNTEEERS REGISTER
-admin.site.register(our_partners,Our_partners)                   # OUR  PARTNERS REGISTER           
+admin.site.register(Trending_fundraisers,trending_fundAdmin)     # TRENDING FUNDRAISER REGISTER
+admin.site.register(Current_incoming_event,event)                 # CURRENT AND INCOMING EVENT REGISTER
+admin.site.register(What_people_say,people_say)               # WHAT PEOPLE SAY  REGISTER
+admin.site.register(Our_success_story,success_story)            # OUR SUCCESS STORY REGISTER
+admin.site.register(Our_volunteers,volunteers)                  # OUR VOLUNTEEERS REGISTER
+admin.site.register(Our_partners,partners)                   # OUR  PARTNERS REGISTER           
  

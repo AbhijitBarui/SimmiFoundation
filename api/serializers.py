@@ -35,7 +35,7 @@ class carouselSerializer(serializers.ModelSerializer):
 #serialize the model  TRENDING_FUNDRAISER
 class trending_fundraisersSerializer(serializers.ModelSerializer):
     class Meta:
-        model=trending_fundraisers
+        model=Trending_fundraisers
         fields= '__all__'
 
 
@@ -43,34 +43,34 @@ class trending_fundraisersSerializer(serializers.ModelSerializer):
 #serialize the model  INCOMING AND CURRENT EVENTS
 class current_incoming_eventSerializer(serializers.ModelSerializer):
     class Meta:
-        model=current_incoming_event
+        model=Current_incoming_event
         fields= '__all__'
 
 
 #serialize the model  WHAT PEOPLE SAY
 class what_people_saySerializer(serializers.ModelSerializer):
     class Meta:
-        model=what_people_say
+        model=What_people_say
         fields= '__all__'
 
 
 #serialize the model  OUR SUCCESS STORY 
 class our_success_storySerializer(serializers.ModelSerializer):
     class Meta:
-        model=our_success_story
+        model=Our_success_story
         fields= '__all__'
 
 #serialize the model  OUR VOLUNTEERS 
 class our_volunteersSerializer(serializers.ModelSerializer):
     class Meta:
-        model=our_volunteers
+        model=Our_volunteers
         fields= '__all__'
 
 
 #serialize the model  OUR PARTNERS 
 class our_partnersSerializer(serializers.ModelSerializer):
     class Meta:
-        model=our_partners
+        model=Our_partners
         fields= '__all__'
 
 

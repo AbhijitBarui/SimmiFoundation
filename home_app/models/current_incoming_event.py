@@ -1,6 +1,6 @@
 from django.db import models
 #EVENT MODEL
-class current_incoming_event(models.Model):
+class Current_incoming_event(models.Model):
     #FUNCTION FOR STORE IMAGE SEPERATELY WITH EVENT IMAGE
     def nameFile(instance,filename):             
      return '/'.join(['EVENT_IMAGE',str(instance.event_name),filename])
