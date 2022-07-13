@@ -3,7 +3,9 @@ from django.contrib import admin
 
 from .models.ngo import ngo
 from .models.fundraisers_medical import Fundraisers_medical
+from .models.fundraisers_others import Fundraiser_others
 # Register your models here.
 
 admin.site.register(Fundraisers_medical)
 admin.site.register(ngo)
+admin.site.register(Fundraiser_others)
