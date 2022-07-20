@@ -1,6 +1,8 @@
 from rest_framework import serializers
 from home_app.models import *
 from fundraisers.models.fundraisers_medical import Fundraisers_medical
+from fundraisers.models.fundraisers_others import Fundraiser_others
+
 
 # SERIALIZERS FOR MEDICAL API STARTS
 class FundraiserSerializer(serializers.ModelSerializer):
@@ -75,3 +77,15 @@ class our_partnersSerializer(serializers.ModelSerializer):
 
 
 # SERIALIZERS FOR HOME PAGE ENDS
+
+
+# SERIALIZERS FOR FUNDRAISERS_OTHERS PAGE STARTS
+
+
+class fundraiser_othersSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Fundraiser_others
+        fields = '__all__'
+
+
+# SERIALIZERS FOR FUNDRAISERS_OTHERS PAGE ENDS

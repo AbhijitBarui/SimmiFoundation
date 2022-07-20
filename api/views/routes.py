@@ -12,12 +12,18 @@ class getRoutes(APIView):
         {'GET':'api/what_p_say_alldata'},    # WHAT PEOPLE SAY 
         {'GET':'api/our_succ_story'},        #OUR SUCCESS STORY 
         {'GET':'api/our_volunteers'},        # OUR VOLUNTEERS 
-        {'GET':'api/our_partners'},        # OUR PARTNERS
+        {'GET':'api/our_partners'},          # OUR PARTNERS
 
         {'GET': '/api/medical_fundraiser'},
         {'GET': '/api/medical_fundraiser/email'},
         {'POST': '/api/medical_fundraiser/create'},
         {'PATCH': '/api/medical_fundraiser/update'},
+
+        {'GET': '/api/fundraiser_others'},
+        {'GET': '/api/fundraiser_others/email_id'},
+        {'POST': '/api/fundraiser_others/create'},
+        {'PATCH': '/api/fundraiser_others/update'},
+        {'DELETE': '/api/fundraiser_others/delete'},
 
         {'POST': 'api/token'},        #TOKEN
         {'POST': 'api/refresh_token'}, #  REFRESH TOEKN

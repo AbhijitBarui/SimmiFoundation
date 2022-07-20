@@ -1,10 +1,8 @@
 from django.urls import path
-
 from .views.routes import getRoutes
-
 from .views.homepage import *
 from .views.medical_fundraiser_views import getMedicalFundraiser, getOneMedicalFundraiser, CreateMedicalFundraiser, UpdateMedicalFundraiser
-
+from .views.fundraisers_others_views import getOneothersfundraiser, fundraiser_othersAPI, fundraiser_othersAPIcreate, fundraiser_othersAPIdelete, fundraiser_othersAPIupdate
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -31,5 +29,10 @@ urlpatterns=[
     path('our_succ_story/',getOur_success_story.as_view()),                       #OUR SUCCESS STORY
     path('our_volunteers/',getOur_volunteer.as_view()),                          #OUR VOLUNTEERS
     path('our_partners/',getOur_partner.as_view()),                           #OUR PARTNERS
-    
+
+    path('fundraiser_others/', fundraiser_othersAPI.as_view()),
+    path('fundraiser_others/<str:email_id>', getOneothersfundraiser.as_view()),
+    path('fundraiser_others/create/', fundraiser_othersAPIcreate.as_view(), name='create_fundraiser_others'),
+    path('fundraiser_others/update/', fundraiser_othersAPIupdate.as_view(), name='update_fundraiser_others'),
+    path('fundraiser_others/delete/', fundraiser_othersAPIdelete.as_view(), name='delete_fundraiser_others'),
 ]
