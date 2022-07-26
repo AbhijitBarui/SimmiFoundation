@@ -23,6 +23,17 @@ class getEvent(APIView):
         return Response(serializer.data)
 
 
+class getincoming_Event(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        projects = Incoming_event.objects.all()
+        serializer =incoming_eventSerializer(projects, many=True)
+        return Response(serializer.data)
+
+
+
+
 # FUNDRAISER_ALL DATA  API VIEW
 # fetch the all data of trending_fundraisers model
 class getFundraiser_data(APIView):
