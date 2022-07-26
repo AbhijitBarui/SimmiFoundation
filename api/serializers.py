@@ -2,6 +2,7 @@ from rest_framework import serializers
 from home_app.models import *
 from fundraisers.models.fundraisers_medical import Fundraisers_medical
 from fundraisers.models.fundraisers_others import Fundraiser_others
+from fundraisers.models.campaign import Campaign
 
 ##### FOR USER VALIDATIONS START #####
 from urllib import request
@@ -150,3 +151,10 @@ class UserChangePasswordSerializer(serializers.Serializer):
 
 
 ####### USER AUTAH SERIALIZE END  #############
+
+# SERIALIZER FOR CAMPAIGNS
+
+class campaign_Serializer(serializers.ModelSerializer):
+    class Meta:
+        model = Campaign
+        fields = '__all__'

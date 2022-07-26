@@ -3,6 +3,7 @@ from .views.routes import getRoutes
 from .views.homepage import *
 from .views.medical_fundraiser_views import getMedicalFundraiser, getOneMedicalFundraiser, CreateMedicalFundraiser, UpdateMedicalFundraiser
 from .views.fundraisers_others_views import getOneothersfundraiser, fundraiser_othersAPI, fundraiser_othersAPIcreate, fundraiser_othersAPIdelete, fundraiser_othersAPIupdate
+from .views.campaign_views import getCampaign, getOneCampaign, CreateCampaign, UpdateCampaign, DeleteCamapign
 from .views.user_auth_view import *
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -38,6 +39,11 @@ urlpatterns=[
     path('fundraiser_others/update/', fundraiser_othersAPIupdate.as_view(), name='update_fundraiser_others'),
     path('fundraiser_others/delete/', fundraiser_othersAPIdelete.as_view(), name='delete_fundraiser_others'),
 
+    path('campaigns/', getCampaign.as_view()),
+    path('campaigns/<str:title>', getOneCampaign.as_view()),
+    path('campaigns/create/', CreateCampaign.as_view()),
+    path('campaigns/update/', UpdateCampaign.as_view()),
+    path('campaigns/delete/', DeleteCamapign.as_view()),
 
 
     ### USER AUTH
