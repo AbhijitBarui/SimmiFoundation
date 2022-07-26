@@ -22,6 +22,9 @@ class trending_fundAdmin(admin.ModelAdmin):
 class event(admin.ModelAdmin):
     list_display=['event_img','event_name','about_event']
 
+class Event(admin.ModelAdmin):
+    list_display=['event_img','event_name','event_location','event_date']
+
 #WHAT PEOPLE SAY ADMIN MODIFICATION
 class people_say(admin.ModelAdmin):
     list_display =['person_name','person_image','person_review']
@@ -32,7 +35,7 @@ class success_story(admin.ModelAdmin):
 
 # OUR VOLUNTEERS ADMIN MODIFICATION
 class volunteers(admin.ModelAdmin):
-    list_display =['volunteer_img','volunteer_name','about_volunteer']
+    list_display =['volunteer_img','volunteer_name','about_volunteer','volunteer_instagrm_id','volunteer_twitter_id','volunteer_linkdin_id','volunteer_facebook_id']
 
 
 # OUR PARTNERS ADMIN MODIFICATION
@@ -43,6 +46,7 @@ class partners(admin.ModelAdmin):
 admin.site.register(carousel)   # CAROSOUL REGISTER 
 admin.site.register(Trending_fundraisers,trending_fundAdmin)     # TRENDING FUNDRAISER REGISTER
 admin.site.register(Current_incoming_event,event)                 # CURRENT AND INCOMING EVENT REGISTER
+admin.site.register(Incoming_event,Event)
 admin.site.register(What_people_say,people_say)               # WHAT PEOPLE SAY  REGISTER
 admin.site.register(Our_success_story,success_story)            # OUR SUCCESS STORY REGISTER
 admin.site.register(Our_volunteers,volunteers)                  # OUR VOLUNTEEERS REGISTER

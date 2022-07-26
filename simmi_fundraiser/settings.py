@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'fundraisers',
     'home_app',
+    'User_Auth',
     
 ]
 

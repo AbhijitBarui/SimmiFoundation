@@ -9,6 +9,7 @@ class getRoutes(APIView):
         {'GET': 'api/carousel'},             #ALL API
         {'GET':'api/fundraiser_alldata'},    #FUNDRAISER
         {'GET':'api/event_data'},            # EVENT CURRENT AND INCOMING
+        {'GET':'api/incoming_event_data'},
         {'GET':'api/what_p_say_alldata'},    # WHAT PEOPLE SAY 
         {'GET':'api/our_succ_story'},        #OUR SUCCESS STORY 
         {'GET':'api/our_volunteers'},        # OUR VOLUNTEERS 
@@ -27,6 +28,13 @@ class getRoutes(APIView):
 
         {'POST': 'api/token'},        #TOKEN
         {'POST': 'api/refresh_token'}, #  REFRESH TOEKN
+
+        {'POST': '/api/register'},
+        {'POST': '/api/login'},
+        {'POST': '/api/changepassword'},
+
+
+
 
         ]
         return Response(routes)

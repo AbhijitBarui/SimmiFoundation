@@ -6,3 +6,7 @@ class Our_volunteers(models.Model):
     volunteer_img=models.ImageField(upload_to=nameFile)
     volunteer_name=models.CharField(max_length=100)
     about_volunteer=models.TextField(max_length=300)
+    volunteer_instagrm_id=models.URLField(max_length=300 ,null=True)
+    volunteer_twitter_id=models.URLField(max_length=300, null=True)
+    volunteer_linkdin_id=models.URLField(max_length=300 , null=True)
+    volunteer_facebook_id=models.URLField(max_length=300 , null=True)
