@@ -6,6 +6,12 @@ from rest_framework.response import Response
 class getRoutes(APIView):
     def get(self,request):
         routes=[
+        {'POST': 'api/token'},  # TOKEN
+        {'POST': 'api/refresh_token'},  # REFRESH TOEKN
+
+        {'POST': '/api/register'},
+        {'POST': '/api/login'},
+        {'POST': '/api/changepassword'},
         {'GET': 'api/carousel'},             #ALL API
         {'GET':'api/fundraiser_alldata'},    #FUNDRAISER
         {'GET':'api/event_data'},            # EVENT CURRENT AND INCOMING
@@ -26,12 +32,13 @@ class getRoutes(APIView):
         {'PATCH': '/api/fundraiser_others/update'},
         {'DELETE': '/api/fundraiser_others/delete'},
 
-        {'POST': 'api/token'},        #TOKEN
-        {'POST': 'api/refresh_token'}, #  REFRESH TOEKN
+        {'GET': '/api/campaigns/'},
+        {'GET': '/api/campaigns/title'},
+        {'POST': '/api/campaigns/create/'},
+        {'PATCH': '/api/campaigns/update/'},
+        {'DELETE': '/api/campaigns/delete/'},
 
-        {'POST': '/api/register'},
-        {'POST': '/api/login'},
-        {'POST': '/api/changepassword'},
+
 
 
 

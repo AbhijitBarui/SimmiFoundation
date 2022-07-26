@@ -20,6 +20,7 @@ from django.contrib.auth.password_validation import validate_password
 
 
 class newuserRegistrationView(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request, format=None):
         password=request.data['password']
         length_pass=len(password)
@@ -54,6 +55,7 @@ class newuserRegistrationView(APIView):
 
 
 class newuserLoginView(APIView):
+  permission_classes = [IsAuthenticated]
   #renderer_classes = [UserRenderer]
   def post(self, request, format=None):
     serializer = newuserloginrSerializer(data=request.data)
@@ -85,7 +87,7 @@ class newuserLoginView(APIView):
 
 class UserChangePasswordView(APIView):
   #renderer_classes = [UserRenderer]
-  #permission_classes = [IsAuthenticated]
+  permission_classes = [IsAuthenticated]
   def post(self, request, format=None):
     serializer = UserChangePasswordSerializer(data=request.data)
     email=request.data['email']
