@@ -24,14 +24,14 @@ urlpatterns=[
     path('medical_fundraiser/create/', CreateMedicalFundraiser.as_view(), name='create_medical_fundraiser'),
     path('medical_fundraiser/update/', UpdateMedicalFundraiser.as_view(), name='update_medical_fundraiser'),
 
-    path('carousel/',getCarousel.as_view()),                                  #CAROUSEL API
-    path('fundraiser_alldata/',  getFundraiser_data.as_view(), name ='fundraiser_data'),   # FUNDRAISER ALL DATA API
-    path('event_data/',getEvent.as_view()),                                       #ALL CURRENT AND INCOMING EVENT DATA  API
+    path('carousel/',getCarousel.as_view()),                                
+    path('fundraiser_alldata/',  getFundraiser_data.as_view(), name ='fundraiser_data'),   
+    path('event_data/',getEvent.as_view()),                                       
     path('incoming_event_data/',getincoming_Event.as_view()),
-    path('what_p_say_alldata/',getWhat_people_say.as_view()),                                  # WHAT PEOPLE SAY API
-    path('our_succ_story/',getOur_success_story.as_view()),                       #OUR SUCCESS STORY
-    path('our_volunteers/',getOur_volunteer.as_view()),                          #OUR VOLUNTEERS
-    path('our_partners/',getOur_partner.as_view()),                           #OUR PARTNERS
+    path('what_p_say_alldata/',getWhat_people_say.as_view()),                                  
+    path('our_succ_story/',getOur_success_story.as_view()),                       
+    path('our_volunteers/',getOur_volunteer.as_view()),                          
+    path('our_partners/',getOur_partner.as_view()),                           
 
     path('fundraiser_others/', fundraiser_othersAPI.as_view()),
     path('fundraiser_others/<str:email_id>', getOneothersfundraiser.as_view()),
@@ -50,4 +50,5 @@ urlpatterns=[
     path('register/',newuserRegistrationView.as_view()),
     path('login/',newuserLoginView.as_view()),
     path('changepassword/',UserChangePasswordView.as_view()),
+    path('loggeduser/<int:id>', getOneUserByid.as_view()),
 ]

@@ -6,20 +6,23 @@ from rest_framework.response import Response
 class getRoutes(APIView):
     def get(self,request):
         routes=[
-        {'POST': 'api/token'},  # TOKEN
-        {'POST': 'api/refresh_token'},  # REFRESH TOEKN
+        {'POST': '/api/token'},  
+        {'POST': '/api/refresh_token'}, 
 
         {'POST': '/api/register'},
         {'POST': '/api/login'},
         {'POST': '/api/changepassword'},
-        {'GET': 'api/carousel'},             #ALL API
-        {'GET':'api/fundraiser_alldata'},    #FUNDRAISER
-        {'GET':'api/event_data'},            # EVENT CURRENT AND INCOMING
-        {'GET':'api/incoming_event_data'},
-        {'GET':'api/what_p_say_alldata'},    # WHAT PEOPLE SAY 
-        {'GET':'api/our_succ_story'},        #OUR SUCCESS STORY 
-        {'GET':'api/our_volunteers'},        # OUR VOLUNTEERS 
-        {'GET':'api/our_partners'},          # OUR PARTNERS
+        {'GET': '/api/loggeduser/id'}, 
+
+
+        {'GET': '/api/carousel'},             
+        {'GET':'/api/fundraiser_alldata'},    
+        {'GET':'/api/event_data'},            
+        {'GET':'/api/incoming_event_data'},
+        {'GET':'/api/what_p_say_alldata'},     
+        {'GET':'/api/our_succ_story'},        
+        {'GET':'/api/our_volunteers'},        
+        {'GET':'/api/our_partners'},          
 
         {'GET': '/api/medical_fundraiser'},
         {'GET': '/api/medical_fundraiser/email'},
