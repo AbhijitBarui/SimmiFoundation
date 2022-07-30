@@ -1,3 +1,4 @@
+from asyncio.windows_events import NULL
 from rest_framework.decorators import api_view, permission_classes, APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
@@ -24,8 +25,7 @@ class newuserRegistrationView(APIView):
     def post(self, request, format=None):
         password=request.data['password']
         length_pass=len(password)
-        
-        cpassword=request.data['cpassword']
+        cpassword=request.data['Cpassword']
         email=request.data['email']
 
         #PASSWORD VALIDATION
@@ -43,10 +43,12 @@ class newuserRegistrationView(APIView):
         request.data.update({'password':encryptpass })  #CHANGE THA DATA IN SERIALIZE DATA
 
         serializer = newuserregisterSerializer(data=request.data)
+        print(serializer)
 
         
         if serializer.is_valid(raise_exception=True):
             data = serializer.save()
+            print(data)
             token = get_tokens_for_user(data)
             return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
 
@@ -74,13 +76,13 @@ class newuserLoginView(APIView):
         if (email==email_database and flag==True ):
             request.session['name']=user.name
             request.session['email']=user.email
-            request.session['phone']=user.Phone
+            request.session['phone']=user.phone
             # print(request.session['name'])
             # print(request.session['email'])
             # print(request.session['phone'])
 
             token = get_tokens_for_user(user)
-            return Response({'token':token, 'msg':'Login Success'}, status=status.HTTP_200_OK)
+            return Response({'token':token, 'msg':'Login Success','id':user.id}, status=status.HTTP_200_OK)
         else:
             return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
 
@@ -116,3 +118,18 @@ class UserChangePasswordView(APIView):
 
     else:
         return Response({'msg':'Password not match OR Incorrect old password'}, status=status.HTTP_200_OK)
+
+
+
+
+###################### GET USER BY ID FOR PROFILE #################
+class getOneUserByid(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request,id, format=None):
+        user = newuser.objects.get(id=id)
+        print(user)
+        if (user):
+            serializer = newuserrSerializer(user, many=False)
+            return Response({'status' : 200 ,  'message' : 'user found', 'user is' :serializer.data})
+        else:
+            return Response({'msg':'User Not Fond Or Incorrect User Id'}, status=status.HTTP_200_OK)

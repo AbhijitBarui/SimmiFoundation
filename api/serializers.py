@@ -129,9 +129,10 @@ class fundraiser_othersSerializer(serializers.ModelSerializer):
 ####### USER AUTAH SERIALIZE START  #############
 class newuserregisterSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(max_length=255)
+    Cpassword=serializers.CharField(max_length=255,read_only=True)
     class Meta:
         model = newuser
-        fields = '__all__' 
+        fields = ['email','name','password','Cpassword','phone'] 
 
 
 class newuserloginrSerializer(serializers.ModelSerializer):
@@ -148,6 +149,15 @@ class UserChangePasswordSerializer(serializers.Serializer):
     class Meta:
         maodel=newuser
         fields = ['password', 'cpassword','email']
+
+class newuserrSerializer(serializers.ModelSerializer):
+      class Meta:
+        model = newuser
+        fields =['id','email','name','phone']
+ 
+  
+
+
 
 
 ####### USER AUTAH SERIALIZE END  #############

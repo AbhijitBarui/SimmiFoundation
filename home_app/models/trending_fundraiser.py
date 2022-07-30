@@ -11,3 +11,4 @@ class Trending_fundraisers(models.Model):
     fund_amount_target=models.IntegerField()
     fund_start_date=models.DateField(null=True)
     fund_end_date=models.DateField(null=True)
+    fundraiser_support=models.IntegerField(null=True)
