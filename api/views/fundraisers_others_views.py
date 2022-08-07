@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes, APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
-from api.serializers import fundraiser_othersSerializer
+from api.serializer.other_fundraisers_serializers import fundraiser_othersSerializer
 from fundraisers.models.fundraisers_others import Fundraiser_others
 
 

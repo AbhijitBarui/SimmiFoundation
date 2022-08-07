@@ -2,7 +2,7 @@ from rest_framework.decorators import api_view, permission_classes, APIView
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 from rest_framework import status
-from api.serializers import FundraiserSerializer, CreateMedicalFundraiserSerializer, UpdateMedicalFundraiserSerializer
+from api.serializer.medical_serializers import FundraiserSerializer, CreateMedicalFundraiserSerializer, UpdateMedicalFundraiserSerializer
 from fundraisers.models.fundraisers_medical import Fundraisers_medical
 
 class getMedicalFundraiser(APIView):

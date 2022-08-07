@@ -1,13 +1,25 @@
-from asyncio.windows_events import NULL
-from rest_framework.decorators import api_view, permission_classes, APIView
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework import serializers
+from api.serializer.user_auth_serializers import *
+from User_Auth.model import *
 from rest_framework.response import Response
 from rest_framework import status
-from api.serializers import newuserregisterSerializer,newuserloginrSerializer
-from api.serializers import *
-from User_Auth.model import new_user
-#from rest_framework import status
-from django.contrib.auth.password_validation import validate_password
+from rest_framework.decorators import api_view, permission_classes, APIView
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from django.contrib.auth.hashers import make_password,check_password
+from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth import logout
+
+
+
+
+
+# Generate Token Manually
+def get_tokens_for_user(user):
+  refresh = RefreshToken.for_user(user)
+  return {
+      'refresh': str(refresh),
+      'access': str(refresh.access_token),
+  }
 
 
 
@@ -16,10 +28,7 @@ from django.contrib.auth.password_validation import validate_password
 
 
 
-
-
-
-
+# REGISTRATION 
 class newuserRegistrationView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self, request, format=None):
@@ -56,6 +65,7 @@ class newuserRegistrationView(APIView):
 
 
 
+# LOGIN
 class newuserLoginView(APIView):
   permission_classes = [IsAuthenticated]
   #renderer_classes = [UserRenderer]
@@ -82,11 +92,12 @@ class newuserLoginView(APIView):
             # print(request.session['phone'])
 
             token = get_tokens_for_user(user)
-            return Response({'token':token, 'msg':'Login Success','id':user.id}, status=status.HTTP_200_OK)
+            return Response({'token':token, 'msg':'Login Success','id':user.id,'email':user.email}, status=status.HTTP_200_OK)
         else:
             return Response({'errors':{'non_field_errors':['Email or Password is not Valid']}}, status=status.HTTP_404_NOT_FOUND)
 
 
+# CHANGE PASSWORD
 class UserChangePasswordView(APIView):
   #renderer_classes = [UserRenderer]
   permission_classes = [IsAuthenticated]
@@ -133,3 +144,7 @@ class getOneUserByid(APIView):
             return Response({'status' : 200 ,  'message' : 'user found', 'user is' :serializer.data})
         else:
             return Response({'msg':'User Not Fond Or Incorrect User Id'}, status=status.HTTP_200_OK)
+
+
+
+

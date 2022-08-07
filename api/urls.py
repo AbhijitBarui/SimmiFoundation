@@ -5,6 +5,7 @@ from .views.medical_fundraiser_views import getMedicalFundraiser, getOneMedicalF
 from .views.fundraisers_others_views import getOneothersfundraiser, fundraiser_othersAPI, fundraiser_othersAPIcreate, fundraiser_othersAPIdelete, fundraiser_othersAPIupdate
 from .views.campaign_views import getCampaign, getOneCampaign, CreateCampaign, UpdateCampaign, DeleteCamapign
 from .views.user_auth_view import *
+
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -51,4 +52,6 @@ urlpatterns=[
     path('login/',newuserLoginView.as_view()),
     path('changepassword/',UserChangePasswordView.as_view()),
     path('loggeduser/<int:id>', getOneUserByid.as_view()),
+  
+    
 ]
