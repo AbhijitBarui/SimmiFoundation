@@ -27,12 +27,13 @@ class newuserloginrSerializer(serializers.ModelSerializer):
 
 
 
-class UserChangePasswordSerializer(serializers.Serializer):
-    oldpassword = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
-#   cpassword = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
-    class Meta:
-        maodel=newuser
-        fields = ['password', 'cpassword','email']
+class UserChangePasswordSerializer(serializers.ModelSerializer):
+  oldpassword = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+  cpassword = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+  
+  class Meta:
+    model = newuser
+    fields = ['email', 'password','cpassword','oldpassword']
 
 
 
