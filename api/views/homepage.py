@@ -1,7 +1,7 @@
 from rest_framework.views import APIView  # FOR CLASS BASE VIEW
 from rest_framework.permissions import IsAuthenticated  # FOR  AUTHORIZATION
 from rest_framework.response import Response
-from api.serializers import *
+from api.serializer.homepage_serializers import *
 
 
 class getCarousel(APIView):
