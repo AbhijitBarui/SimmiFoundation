@@ -11,7 +11,7 @@ from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
 
-
+from .views.payment import CallbackView, PaymentView
 
 
 urlpatterns=[
@@ -53,5 +53,6 @@ urlpatterns=[
     path('changepassword/',UserChangePasswordView.as_view()),
     path('loggeduser/<int:id>', getOneUserByid.as_view()),
   
-    
+    path('razorpay_order', PaymentView.as_view(), name='razorpay_order'),
+    path('razorpay_callback', CallbackView.as_view(), name='razorpay_callback'),
 ]

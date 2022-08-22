@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'fundraisers',
     'home_app',
     'User_Auth',
+    'payments',
   
     
 ]
