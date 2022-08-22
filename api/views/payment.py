@@ -13,7 +13,7 @@ RAZOR_KEY = os.getenv(config('RAZORPAY_KEY'), None)
 RAZOR_SECRET = os.getenv(config('RAZORPAY_SECRET'), None)
 
 # Creating a Razorpay Client instance.
-razorpay_client = razorpay.Client(auth=("rzp_test_p7QukLMtggo6LE", "kaME4MgYqXHYFT7ustAX5t2W"))
+razorpay_client = razorpay.Client(auth=(config('RAZORPAY_KEY'), config('RAZORPAY_SECRET')))
 
 
 class PaymentView(APIView):
