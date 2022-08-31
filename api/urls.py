@@ -5,6 +5,8 @@ from .views.medical_fundraiser_views import getMedicalFundraiser, getOneMedicalF
 from .views.fundraisers_others_views import getOneothersfundraiser, fundraiser_othersAPI, fundraiser_othersAPIcreate, fundraiser_othersAPIdelete, fundraiser_othersAPIupdate
 from .views.campaign_views import getCampaign, getOneCampaign, CreateCampaign, UpdateCampaign, DeleteCamapign
 from .views.user_auth_view import *
+from .views.faq_views import *
+from .views.ngo_registration_views import getOnengo,ngo_registrationAPI,ngo_registrationAPIcreate,ngo_registrationAPIupdate,ngo_registrationAPIdelete
 
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -32,7 +34,13 @@ urlpatterns=[
     path('what_p_say_alldata/',getWhat_people_say.as_view()),                                  
     path('our_succ_story/',getOur_success_story.as_view()),                       
     path('our_volunteers/',getOur_volunteer.as_view()),                          
-    path('our_partners/',getOur_partner.as_view()),                           
+    path('our_partners/',getOur_partner.as_view()),
+
+    path('ngo_registration/', ngo_registrationAPI.as_view()),
+    path('ngo_registration/<str:organisation_name>', getOnengo.as_view()),
+    path('ngo_registration/create/', ngo_registrationAPIcreate.as_view(), name='create_fundraiser_others'),
+    path('ngo_registration/update/', ngo_registrationAPIupdate.as_view(), name='update_fundraiser_others'),
+    path('ngo_registration/delete/', ngo_registrationAPIdelete.as_view(), name='delete_fundraiser_others'),
 
     path('fundraiser_others/', fundraiser_othersAPI.as_view()),
     path('fundraiser_others/<str:email_id>', getOneothersfundraiser.as_view()),
@@ -47,7 +55,7 @@ urlpatterns=[
     path('campaigns/delete/', DeleteCamapign.as_view()),
 
 
-    ### USER AUTH
+    # USER AUTH
     path('register/',newuserRegistrationView.as_view()),
     path('login/',newuserLoginView.as_view()),
     path('changepassword/',UserChangePasswordView.as_view()),
@@ -55,4 +63,8 @@ urlpatterns=[
   
     path('razorpay_order', PaymentView.as_view(), name='razorpay_order'),
     path('razorpay_callback', CallbackView.as_view(), name='razorpay_callback'),
+
+    # FAQ
+    path('faq/create/', faq_APIcreate.as_view()),
+    path('faq/<str:username>', getfaq.as_view()),
 ]
