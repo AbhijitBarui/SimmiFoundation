@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'home_app',
     'User_Auth',
     'payments',
+    'faq',
   
     
 ]
