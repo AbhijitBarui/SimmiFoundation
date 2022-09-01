@@ -1,5 +1,5 @@
 from django.db import models
-
+from fundraisers.models.ngo import ngo
 
 class Campaign(models.Model):
     def nameFile(instance, filename):
@@ -22,3 +22,5 @@ class Campaign(models.Model):
 
     current_amount_raised=models.IntegerField(blank=True, null=True)
 
+    ngo_name=models.CharField(max_length=250)
+    ngo_logo=models.ImageField(upload_to=nameFile)
