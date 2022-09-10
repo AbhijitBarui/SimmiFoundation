@@ -60,6 +60,8 @@ urlpatterns=[
     path('login/',newuserLoginView.as_view()),
     path('changepassword/',UserChangePasswordView.as_view()),
     path('loggeduser/<int:id>', getOneUserByid.as_view()),
+    path('send-reset-password-email/', SendPasswordResetEmailView.as_view()),
+    path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
   
     path('razorpay_order', PaymentView.as_view(), name='razorpay_order'),
     path('razorpay_callback', CallbackView.as_view(), name='razorpay_callback'),
