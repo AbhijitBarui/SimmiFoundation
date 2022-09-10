@@ -43,12 +43,28 @@ class newuserrSerializer(serializers.ModelSerializer):
     fields = ['email', 'name','phone']
 
 
-
-
-
-
-
-
-
-
 ####### USER AUTAH SERIALIZE END  #############
+
+
+
+########################## FORGOT PASSWORD RESET  EMAIL START ####################
+
+class SendPasswordResetEmailSerializer(serializers.Serializer):
+  email = serializers.EmailField(max_length=255)
+  class Meta:
+    fields = ['email']
+
+
+
+class UserPasswordResetSerializer(serializers.Serializer):
+  password = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+  password2 = serializers.CharField(max_length=255, style={'input_type':'password'}, write_only=True)
+  class Meta:
+    fields = ['password', 'password2']
+
+  def validate(self, attrs):
+    uid = self.context.get('uid')
+    token = self.context.get('token')
+    return attrs
+
+########################## FORGOT PASSWORD RESET  EMAIL END ####################

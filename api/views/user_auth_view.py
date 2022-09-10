@@ -13,6 +13,17 @@ from django.contrib.auth import logout
 
 
 
+from django.utils.encoding import smart_str, force_bytes, DjangoUnicodeDecodeError
+from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.core.mail import EmailMessage
+from django.core.mail import send_mail
+import os
+import uuid
+
+
+
+
 # Generate Token Manually
 def get_tokens_for_user(user):
   refresh = RefreshToken.for_user(user)
@@ -57,7 +68,7 @@ class newuserRegistrationView(APIView):
         
         if serializer.is_valid(raise_exception=True):
             data = serializer.save()
-            print(data)
+            # print(data)
             token = get_tokens_for_user(data)
             return Response({'token':token, 'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
 
@@ -83,7 +94,7 @@ class newuserLoginView(APIView):
         flag=check_password(password,password_database)    #PASSWORD CHECK
         print(flag)
     
-        if (email==email_database and flag==True ):
+        if (email==email_database and flag==True ):    #flag==True
             request.session['name']=user.name
             request.session['email']=user.email
             request.session['phone']=user.phone
@@ -111,19 +122,14 @@ class UserChangePasswordView(APIView):
     
     user=newuser.objects.get(email=email)
 
-    check=check_password(oldpass,user.password)   #match old  and new password
-    
-   
-    encryptpass=make_password(newpass)  #PASSWORD ENCRYPT
-    print(encryptpass)
-    request.data._mutable = True       # FOR  CHANGE IN SERIALIZE DATA
-    request.data.update({'password':encryptpass })  #CHANGE THA DATA IN SERIALIZE DATA
+
     
     serializer.is_valid(raise_exception=True)
     
-    if (check==True and passmatch):
+    if (newpass==cpass and passmatch):
             print(user.password)
-            user.password=encryptpass
+            # user.password=encryptpass
+            user.password=newpass           
             user.save()
             return Response({'msg':'Password Changed Successfully'}, status=status.HTTP_200_OK)
 
@@ -148,3 +154,70 @@ class getOneUserByid(APIView):
 
 
 
+
+
+
+
+
+################### SEND RESET PASSWORD EMAIL  ############################
+
+class SendPasswordResetEmailView(APIView):
+  permission_classes = [IsAuthenticated]
+  def post(self, request, format=None):
+    serializer = SendPasswordResetEmailSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    email=request.data['email']
+    if newuser.objects.filter(email=email):
+        user = newuser.objects.get(email = email)
+        uid = urlsafe_base64_encode(force_bytes(user.id))
+        token1=str(uuid.uuid4())
+        token = urlsafe_base64_encode(force_bytes(token1))
+        link = 'http://localhost:3000/api/user/reset/'+uid+'/' +token  
+        print('Encoded UID', uid)
+        print('Token', token)
+        print('Password Reset Link', link)
+
+     
+   
+     
+
+
+########################### MAIL SEND PROCESS ################3
+        subject = "SIMMI FOUNDATION PASSWORD RESET  LINK  "  
+        msg     = f'RESET PASSWORD LINK : {link}' 
+        to      = user.email 
+        mail_by    = os.environ.get('EMAIL_USER') 
+        res     = send_mail(subject, msg,mail_by, [to])    
+        if(res == 1):  
+            msg = "Password RESET Mail Sent Successfuly"  
+        else:  
+            msg = "FAILED TO SEND MAIL"  
+        return Response({msg})
+    
+    else:
+        return Response({"msg":"Email Is Not Valid"})
+ 
+########################### END MAIL SEND PROCESS ################
+
+class UserPasswordResetView(APIView):
+    permission_classes = [IsAuthenticated]
+    def post(self, request, uid, token, format=None):
+        serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
+        serializer.is_valid(raise_exception=True)
+        pass1=request.data['password']
+        pass2=request.data['password2']
+        if pass1 != pass2:
+            raise serializers.ValidationError("Password and Confirm Password doesn't match")
+
+        id = smart_str(urlsafe_base64_decode(uid))
+        user = newuser.objects.get(id=id)
+
+        encryptpass2=make_password((pass1))  #PASSWORD ENCRYPT
+        print(encryptpass2)
+        request.data._mutable = True       # FOR  CHANGE IN SERIALIZE DATA
+        request.data.update({'pass1':encryptpass2 })  #CHANGE THA DATA IN SERIALIZE DATA
+        user.password=encryptpass2
+
+     
+        user.save()
+        return Response({'msg':'PASSWORD CHANGED SUCCESSFULLY'})
