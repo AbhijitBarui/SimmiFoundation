@@ -1,0 +1,1 @@
+from .fundraisers_medical import Fundraisers_medical
