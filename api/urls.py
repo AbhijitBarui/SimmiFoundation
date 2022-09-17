@@ -19,7 +19,7 @@ from .views.payment import CallbackView, PaymentView
 urlpatterns=[
     path('',getRoutes.as_view()),
 
-    path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # GENERATE TOKEN
+    path('token/', MyTokenObtainPairView.as_view(), name='token_obtain_pair'), # GENERATE TOKEN
     path('refresh_token/', TokenRefreshView.as_view(), name='token_refresh'),  # GENERATE REFRESH TOKE
 
     path('medical_fundraiser/', getMedicalFundraiser.as_view()),
@@ -58,10 +58,15 @@ urlpatterns=[
     # USER AUTH
     path('register/',RegisterView.as_view()),
     path('login/',newuserLoginView.as_view()),
-    path('changepassword/',UserChangePasswordView.as_view()),
+    path('changepassword/',ChangePasswordAPIView.as_view()),
     path('loggeduser/<int:id>', getOneUserByid.as_view()),
     path('send-reset-password-email/', SendPasswordResetEmailView.as_view()),
     path('reset-password/<uid>/<token>/', UserPasswordResetView.as_view(), name='reset-password'),
+    path('user/', UserGetUpdateDestoryAPIView.as_view()),
+    path('user-settings/', UserSettingGetUpdateAPIView.as_view()),
+    path('alt-emails/',AltEmailListCreateAPIView.as_view()),
+    path('alt-emails/<int:pk>',AltEmailUpdateDestroyAPIView.as_view()),
+    path('login-google/',GoogleSocialAuthView.as_view()),
   
     path('razorpay_order', PaymentView.as_view(), name='razorpay_order'),
     path('razorpay_callback', CallbackView.as_view(), name='razorpay_callback'),
