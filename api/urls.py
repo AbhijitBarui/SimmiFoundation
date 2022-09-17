@@ -56,7 +56,7 @@ urlpatterns=[
 
 
     # USER AUTH
-    path('register/',newuserRegistrationView.as_view()),
+    path('register/',RegisterView.as_view()),
     path('login/',newuserLoginView.as_view()),
     path('changepassword/',UserChangePasswordView.as_view()),
     path('loggeduser/<int:id>', getOneUserByid.as_view()),

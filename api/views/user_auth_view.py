@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from api.serializer.user_auth_serializers import *
-from User_Auth.model import *
+from User_Auth.models import *
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes, APIView
@@ -18,7 +18,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import EmailMessage
 from django.core.mail import send_mail
-import os
+from decouple import config
 import uuid
 
 
@@ -78,7 +78,7 @@ class newuserRegistrationView(APIView):
 
 # LOGIN
 class newuserLoginView(APIView):
-  permission_classes = [IsAuthenticated]
+#   permission_classes = [IsAuthenticated]
   #renderer_classes = [UserRenderer]
   def post(self, request, format=None):
     serializer = newuserloginrSerializer(data=request.data)
@@ -86,7 +86,7 @@ class newuserLoginView(APIView):
 
         email=request.data['email']
         password=request.data['password']
-        user=newuser.objects.get(email=email)
+        user=User.objects.get(email=email)
         print(user)
         email_database=user.email
         password_database=user.password
@@ -95,9 +95,9 @@ class newuserLoginView(APIView):
         print(flag)
     
         if (email==email_database and flag==True ):    #flag==True
-            request.session['name']=user.name
-            request.session['email']=user.email
-            request.session['phone']=user.phone
+            # request.session['name']=user.name
+            # request.session['email']=user.email
+            # request.session['phone']=user.phone
             # print(request.session['name'])
             # print(request.session['email'])
             # print(request.session['phone'])
@@ -162,13 +162,12 @@ class getOneUserByid(APIView):
 ################### SEND RESET PASSWORD EMAIL  ############################
 
 class SendPasswordResetEmailView(APIView):
-  permission_classes = [IsAuthenticated]
   def post(self, request, format=None):
     serializer = SendPasswordResetEmailSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
     email=request.data['email']
-    if newuser.objects.filter(email=email):
-        user = newuser.objects.get(email = email)
+    if  User.objects.filter(email=email):
+        user = User.objects.get(email = email)
         uid = urlsafe_base64_encode(force_bytes(user.id))
         token1=str(uuid.uuid4())
         token = urlsafe_base64_encode(force_bytes(token1))
@@ -186,7 +185,8 @@ class SendPasswordResetEmailView(APIView):
         subject = "SIMMI FOUNDATION PASSWORD RESET  LINK  "  
         msg     = f'RESET PASSWORD LINK : {link}' 
         to      = user.email 
-        mail_by    = os.environ.get('EMAIL_USER') 
+        mail_by    = config('EMAIL_USER') 
+        print(mail_by,to)
         res     = send_mail(subject, msg,mail_by, [to])    
         if(res == 1):  
             msg = "Password RESET Mail Sent Successfuly"  
@@ -200,7 +200,6 @@ class SendPasswordResetEmailView(APIView):
 ########################### END MAIL SEND PROCESS ################
 
 class UserPasswordResetView(APIView):
-    permission_classes = [IsAuthenticated]
     def post(self, request, uid, token, format=None):
         serializer = UserPasswordResetSerializer(data=request.data, context={'uid':uid, 'token':token})
         serializer.is_valid(raise_exception=True)
@@ -210,7 +209,7 @@ class UserPasswordResetView(APIView):
             raise serializers.ValidationError("Password and Confirm Password doesn't match")
 
         id = smart_str(urlsafe_base64_decode(uid))
-        user = newuser.objects.get(id=id)
+        user = User.objects.get(id=id)
 
         encryptpass2=make_password((pass1))  #PASSWORD ENCRYPT
         print(encryptpass2)
@@ -221,3 +220,105 @@ class UserPasswordResetView(APIView):
      
         user.save()
         return Response({'msg':'PASSWORD CHANGED SUCCESSFULLY'})
+
+#======================== New Auth APIs ====================#
+from rest_framework import generics, mixins
+from django.contrib.auth import get_user_model
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework_simplejwt.views import TokenObtainPairView
+
+class RegisterView(generics.GenericAPIView):
+    serializer_class = RegisterUserSerializer
+
+    def post(self,request):
+        serializer_obj = self.serializer_class(data=request.data)
+        serializer_obj.is_valid(raise_exception=True)
+        user = serializer_obj.save()
+        UserNotificationSetting.objects.create(user=user) 
+        return Response({'msg':'Registration Successful'}, status=status.HTTP_201_CREATED)
+
+class UserGetUpdateDestoryAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+
+    serializer_class = UserSerializer
+    
+    def get(self, request, *args, **kwargs):
+        serializer_obj = self.serializer_class(request.user)
+        return Response(serializer_obj.data)
+    
+    def patch(self, request, *args, **kwargs):
+        serializer_obj = self.serializer_class(request.user, data = request.data, partial = True)
+        serializer_obj.is_valid(raise_exception=True)
+        serializer_obj.save()
+        return Response(serializer_obj.data)
+
+    def delete(self, request, *args, **kwargs):
+        request.user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class UserSettingGetUpdateAPIView(generics.RetrieveUpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    serializer_class = UserSettingsSerializer
+
+    def get(self, request, *args, **kwargs):
+        serializer_obj = self.serializer_class(request.user.settings, context={"user":request.user})
+        return Response(serializer_obj.data)
+    
+    def patch(self, request, *args, **kwargs):
+        serializer_obj = self.serializer_class(request.user.settings, data = request.data, partial = True)
+        serializer_obj.is_valid(raise_exception=True)
+        serializer_obj.save()
+        return Response(serializer_obj.data)
+
+class AltEmailListCreateAPIView(generics.GenericAPIView, mixins.ListModelMixin):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    serializer_class = AlternateUserEmailSerializer
+
+    def get_queryset(self):
+        return self.request.user.alt_emails.all()
+
+    def post(self, request, *args, **kwargs):
+        request.data['user'] = request.user.pk
+        serializer_obj = self.serializer_class(data = request.data)
+        serializer_obj.is_valid(raise_exception=True)
+        serializer_obj.save()
+        return Response(serializer_obj.data, status=status.HTTP_201_CREATED)
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+class AltEmailUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    serializer_class = AlternateUserEmailSerializer
+
+    def get_queryset(self):
+        return self.request.user.alt_emails.all()
+
+class ChangePasswordAPIView(generics.UpdateAPIView):
+    permission_classes = [IsAuthenticated]
+    authentication_classes = [JWTAuthentication]
+    serializer_class = PasswordChangeSerializer
+
+    def patch(self, request, *args, **kwargs):
+        serializer_obj = self.serializer_class(data= request.data, context = {'request': request})
+        serializer_obj.is_valid(raise_exception=True)
+        
+        return Response("Password Changed Succesfully")
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+class GoogleSocialAuthView(generics.GenericAPIView):
+
+    serializer_class = GoogleSocialAuthSerializer
+
+    def post(self, request):
+
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        data = ((serializer.validated_data)['auth_token'])
+        return Response(data, status=status.HTTP_200_OK)

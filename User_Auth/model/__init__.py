@@ -1,1 +1,0 @@
-from .new_user import newuser
